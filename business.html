@@ -1,0 +1,24 @@
+<div id="business" class="container" ng-controller="businessController">
+    <div class="row">
+        <div class="col-md-5 col-md-offset-1">
+            <h3>{{ reviewInfo.business_info.business_name }} <rating ng-model="rate" max="max" readonly="isReadonly" on-leave="overStar = null"></rating></h3>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus delectus ipsam modi nobis nostrum qui! A ab at deserunt dolore dolorem, expedita laudantium maxime nesciunt, porro quos suscipit totam veniam!</p>
+            <h5>
+                <i class="glyphicon glyphicon-globe" aria-hidden="true"></i> <span> {{address}}</span>
+            </h5>
+            <h5>
+                <i class="glyphicon glyphicon-phone" aria-hidden="true"></i> <span>{{reviewInfo.business_info.business_phone}}</span>
+            </h5>
+            <h5>
+                <a href="{{reviewInfo.business_info.external_url}}" target="_blank">
+                    <i class="glyphicon glyphicon-pencil" aria-hidden="true"></i> <span> Write a review </span>
+                </a>
+            </h5>
+
+        </div>
+        <div class="col-md-5">
+            <div id="map_canvas" style="width: 100%; height:250px;"></div>
+        </div>
+    </div>
+</div>
+
