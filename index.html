@@ -33,29 +33,8 @@
     </nav>
 </header>
 
-<div id="business" class="container" ng-controller="businessController">
-    <div class="row">
-        <div class="col-md-5 col-md-offset-1">
-            <h3>{{ reviewInfo.business_info.business_name }} <rating ng-model="rate" max="max" readonly="isReadonly" on-leave="overStar = null"></rating></h3>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus delectus ipsam modi nobis nostrum qui! A ab at deserunt dolore dolorem, expedita laudantium maxime nesciunt, porro quos suscipit totam veniam!</p>
-            <h5>
-                <i class="glyphicon glyphicon-globe" aria-hidden="true"></i> <span> {{address}}</span>
-            </h5>
-            <h5>
-                <i class="glyphicon glyphicon-phone" aria-hidden="true"></i> <span>{{reviewInfo.business_info.business_phone}}</span>
-            </h5>
-            <h5>
-                 <a href="{{reviewInfo.business_info.external_url}}" target="_blank">
-                     <i class="glyphicon glyphicon-pencil" aria-hidden="true"></i> <span> Write a review </span>
-                 </a>
-            </h5>
-
-        </div>
-        <div class="col-md-5">
-            <div id="map_canvas" style="width: 100%; height:250px;"></div>
-        </div>
-    </div>
-</div>
+<!-- Business Section -->
+<business></business>
 
 <!-- Review Section -->
 <reviews></reviews>
@@ -72,51 +51,50 @@
 <!-- Google Map -->
 
 <script>
-    function initialize() {
+function initialize() {
 
-        // Convert location to GPS coordinates
-        var geocoder = new google.maps.Geocoder();
-        var lat=lng=0.0000;
-        var address = "509 Olive Way, Seattle, Washington 98010";
-        if (geocoder) {
-            geocoder.geocode({ 'address': address }, function (results, status) {
-                if (status == google.maps.GeocoderStatus.OK) {
-                    lat=results[0].geometry.location.lat();
-                    lng=results[0].geometry.location.lng();
-                    //alert(lat + ' '+lng);
+    // Convert location to GPS coordinates
+    var geocoder = new google.maps.Geocoder();
+    var lat=lng=0.0000;
+    var address = "509 Olive Way, Seattle, Washington 98010";
+    if (geocoder) {
+        geocoder.geocode({ 'address': address }, function (results, status) {
+            if (status == google.maps.GeocoderStatus.OK) {
+                lat=results[0].geometry.location.lat();
+                lng=results[0].geometry.location.lng();
 
 
-                    var mapProp = {
-                        center:new google.maps.LatLng(lat,lng),
-                        zoom:12,
-                        mapTypeId:google.maps.MapTypeId.ROADMAP
-                    };
-                    var map=new google.maps.Map(document.getElementById("map_canvas"), mapProp);
+                var mapProp = {
+                    center:new google.maps.LatLng(lat,lng),
+                    zoom:12,
+                    mapTypeId:google.maps.MapTypeId.ROADMAP
+                };
+                var map=new google.maps.Map(document.getElementById("map_canvas"), mapProp);
 
-                    var marker=new google.maps.Marker({
-                        position:new google.maps.LatLng(lat,lng),
-                        title:'Click to zoom'
+                var marker=new google.maps.Marker({
+                    position:new google.maps.LatLng(lat,lng),
+                    title:'Click to zoom'
+                });
+                marker.setMap(map);
+
+
+                // Zoom to 9 when clicking on marker
+                google.maps.event.addListener(marker,'click',function() {
+                    var infowindow = new google.maps.InfoWindow({
+                        content:"509 Olive Way<br>Seattle, Washington 98010"
                     });
-                    marker.setMap(map);
+                    infowindow.open(map,marker);
+                    map.setZoom(15);
+                    // map.setCenter(marker.getPosition());
 
-
-                    // Zoom to 9 when clicking on marker
-                    google.maps.event.addListener(marker,'click',function() {
-                        var infowindow = new google.maps.InfoWindow({
-                            content:"509 Olive Way<br>Seattle, Washington 98010"
-                        });
-                        infowindow.open(map,marker);
-                        map.setZoom(15);
-                        // map.setCenter(marker.getPosition());
-
-                    });
-                }
-            });
-        }
-
-
+                });
+            }
+        });
     }
-    google.maps.event.addDomListener(window, 'load', initialize);
+
+
+}
+google.maps.event.addDomListener(window, 'load', initialize);
 </script>
 </body>
 </html>

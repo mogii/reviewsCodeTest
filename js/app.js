@@ -60,6 +60,14 @@
 
     });
 
+    app.directive('business',function(){
+
+        return {
+            restrict: 'E',
+            templateUrl: 'business.html',
+        }
+    });
+
     app.filter('startFrom', function() {
         return function(input, start) {
             start = +start; //parse to int
