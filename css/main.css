@@ -1,0 +1,16 @@
+#business{
+    margin-bottom: 20px;
+}
+
+li{
+    border-bottom: 1px dashed grey;
+    padding: 20px 0;
+}
+
+li h4{
+    padding-top: 10px;
+}
+
+footer{
+    font-size:10px;
+}
