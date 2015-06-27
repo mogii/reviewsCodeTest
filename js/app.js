@@ -2,11 +2,16 @@
  * Created by morrykang on 6/24/15.
  */
 (function() {
+
     var app = angular.module('myApp', ['ui.bootstrap','ngSanitize']);
 
-    app.factory('Data', ['$http',function DataFactory ($http){
-
-        return $http.get('/reviews.json');
+    app.config(['$httpProvider', function($httpProvider) {
+        $httpProvider.defaults.useXDomain = true;
+        delete $httpProvider.defaults.headers.common['X-Requested-With'];
+    }
+    ]).factory('Data', ['$http',function DataFactory ($http){
+        var url = 'http://crossorigin.me/http://test.localfeedbackloop.com/api?apiKey=61067f81f8cf7e4a1f673cd230216112&noOfReviews=10&internal=1&yelp=1&google=1&offset=50&threshold=1';
+        return $http.get(url);
     }]);
 
     app.controller("businessController",['$scope','Data',function($scope,Data){
